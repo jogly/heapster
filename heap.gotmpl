@@ -28,7 +28,7 @@ func (h *{{.Name}}) Less(i int, j int) bool {
 
 // Swap swaps the elements with indexes i and j.
 func (h *{{.Name}}) Swap(i int, j int) {
-  h[i], h[j] = h[j], h[i]
+  (*h)[i], (*h)[j] = (*h)[j], (*h)[i]
 }
 
 func (h *{{.Name}}) Push(x interface{}) {
