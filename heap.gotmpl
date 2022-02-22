@@ -1,0 +1,43 @@
+{{ if .Package -}} package {{ .Package }} {{- end }}
+
+type {{ .Name }} []{{ .Type }}
+
+// Len is the number of elements in the collection.
+func (h *{{.Name}}) Len() int {
+  return len(*h)
+}
+
+// Less reports whether the element with index i
+// must sort before the element with index j.
+//
+// If both Less(i, j) and Less(j, i) are false,
+// then the elements at index i and j are considered equal.
+// Sort may place equal elements in any order in the final result,
+// while Stable preserves the original input order of equal elements.
+//
+// Less must describe a transitive ordering:
+//  - if both Less(i, j) and Less(j, k) are true, then Less(i, k) must be true as well.
+//  - if both Less(i, j) and Less(j, k) are false, then Less(i, k) must be false as well.
+//
+// Note that floating-point comparison (the < operator on float32 or float64 values)
+// is not a transitive ordering when not-a-number (NaN) values are involved.
+// See Float64Slice.Less for a correct implementation for floating-point values.
+func (h *{{.Name}}) Less(i int, j int) bool {
+  panic("not implemented") // TODO: Implement
+}
+
+// Swap swaps the elements with indexes i and j.
+func (h *{{.Name}}) Swap(i int, j int) {
+  h[i], h[j] = h[j], h[i]
+}
+
+func (h *{{.Name}}) Push(x interface{}) {
+  *h = append(*h, x.({{ .Type }}))
+}
+
+func (h *{{.Name}}) Pop() interface{} {
+  n := len(*h)
+  x := (*h)[n-1]
+  *h = (*h)[:n-1]
+  return x
+}
